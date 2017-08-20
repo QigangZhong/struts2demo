@@ -33,4 +33,40 @@ public class ValueStackAction extends ActionSupport {
 		
 		return "putDataToDomain";
 	}
+	
+	/**
+	 * 直接向map栈中存储数据
+	 * @return
+	 */
+	public String putDataToMapStack(){
+		ValueStack vs=ActionContext.getContext().getValueStack();
+		vs.getContext().put("testKey1", "testValue1");
+		ActionContext.getContext().put("testKey2", "testValue2");
+		return null;
+	}
+	
+	/**
+	 * 操作对象栈
+	 * @return
+	 */
+	public String putDataToObjectStack(){
+		ValueStack vs =ActionContext.getContext().getValueStack();
+		
+		//向栈底添加一个元素
+		vs.getRoot().add("testValue");
+		
+		//向栈顶添加一个对象
+		vs.getRoot().add(0,"top of the object stack");
+		
+		//获取栈顶元素
+		vs.peek();
+		vs.getRoot().get(0);
+		
+		//弹出栈顶元素
+		vs.pop();
+		vs.getRoot().remove(0);
+		
+		
+		return null;
+	}
 }
