@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	<package name="interceptor" namespace="/" extends="struts-default">
+		<interceptors>
+			<!-- 用拦截器栈来组合多个拦截器 -->
+			<interceptor-stack name="myInterceptorStack">
+				<interceptor-ref name="myInterceptor"></interceptor-ref>
+				<!-- defaultStack是struts2内置的拦截器 -->
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+			
+			<!-- 申明单个拦截器 -->
+			<interceptor name="myInterceptor" class="com.qigang.struts2.interceptor.MyInterceptor"></interceptor>
+		</interceptors>
+		
+		<!-- 使用拦截器栈拦截请求 -->
+		<default-interceptor-ref name="myInterceptorStack"></default-interceptor-ref>
+		
+		
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="intercepterAction_*" method="{1}" class="com.qigang.struts2.interceptor.InterceptorAction">
+			<result>index.jsp</result>
+		</action>
+	</package>
+</struts>

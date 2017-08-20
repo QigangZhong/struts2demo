@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	<!-- 将拦截器单独放到一个包下面 -->
+	<package name="logininterceptorpkg" namespace="/" extends="struts-default">
+		<interceptors>
+			<!-- 组合拦截器,包括我们自己的login拦截器以及struts2的默认拦截器defaultStack -->
+			<interceptor-stack name="logininterceptorstack">
+				<interceptor-ref name="logininterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+			
+			<!-- 我们自己的登录拦截器,拦截index.jsp页面，未登录用户跳转login.jsp，登录的用户才能访问 -->
+			<interceptor name="logininterceptor" class="com.qigang.interceptorsample.interceptor.LoginInterceptor"></interceptor>
+		</interceptors>
+	</package>
+
+	<package name="login" namespace="/" extends="struts-default">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="loginAction_*" class="com.qigang.interceptorsample.action.LoginAction" method="{1}">
+			<result name="indexAction" type="redirectAction">indexAction_index</result>
+			<result name="loginerror">login.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 登录index.jsp需要引入登录拦截器，没登录页面跳转登录页面 -->
+	<package name="index" namespace="/" extends="logininterceptorpkg">
+		<!-- 使用登录拦截器拦截请求 -->
+		<default-interceptor-ref name="logininterceptorstack"></default-interceptor-ref>
+		<action name="indexAction_*" class="com.qigang.interceptorsample.action.IndexAction" method="{1}">
+			<result name="login">interceptorsample/login.jsp</result>
+			<result name="index">interceptorsample/index.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -28,8 +28,10 @@
 		</action>
 	</package>
 	
-	<include file="struts-resulttype.xml"></include>
+	<!-- <include file="struts-resulttype.xml"></include>
 	<include file="struts-pattern.xml"></include>
+	<include file="struts-interceptor.xml"></include>
+	<include file="interceptorsample.xml"></include>  -->
 	
-	
+	<include file="valuestack.xml"></include>
 </struts>
