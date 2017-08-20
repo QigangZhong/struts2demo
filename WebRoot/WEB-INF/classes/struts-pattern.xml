@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	<!-- 不带通配符 -->
+	<package name="pattern1" namespace="/" extends="struts-default">
+		<action name="patternAction" class="com.qigang.struts2.pattern.PatternAction">
+			<result>/pattern/pattern.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 通配符 -->
+	<package name="pattern2" namespace="/" extends="struts-default">
+		<action name="*_add" class="com.qigang.struts2.pattern.PatternAction">
+			<result>/pattern/pattern.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 通配符代表执行的action名称 -->
+	<package name="pattern3" namespace="/" extends="struts-default">
+		<action name="*_method" class="com.qigang.struts2.pattern.{1}">
+			<result>/pattern/pattern.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 通配符代表执行的action中方法名称【比较常见的写法】 -->
+	<package name="pattern4" namespace="/" extends="struts-default">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="teacherAction_*" method="{1}" class="com.qigang.struts2.pattern.TeacherAction">
+			<result>/pattern/pattern.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 仅根据方法名称来映射,action不匹配 -->
+	<package name="pattern5" namespace="/TeacherAction" extends="struts-default">
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<action name="*" method="{1}" class="com.qigang.struts2.pattern.TeacherAction">
+			<result>/pattern/{1}.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	<package name="resulttype" namespace="/" extends="struts-default">
+		<!-- 全局结果集页面 -->
+		<global-results>
+			<result>success.jsp</result>
+		</global-results>
+		<action name="dispatcherAction" method="testDispatcher" class="com.qigang.struts2.resulttype.ResultTypeAction">
+			<!-- result默认name是SUCCESS，默认type是dispatcher -->
+			<!-- type的可选值在struts-default.xml中 -->
+			<result name="dispatcher"  type="dispatcher">/resulttype/resulttype.jsp</result>
+		</action>
+		<action name="redirectAction" method="testRedirect" class="com.qigang.struts2.resulttype.ResultTypeAction">
+			<result name="redirect"  type="redirect">/resulttype/resulttype.jsp</result>
+		</action>
+		<action name="redirectActionAction" method="testRedirectAction" class="com.qigang.struts2.resulttype.ResultTypeAction">
+			<result name="redirectAction"  type="redirectAction">dispatcherAction</result>
+		</action>
+	</package>
+</struts>
